@@ -15,21 +15,43 @@ defmodule MoviesWeb.MovieView do
       id: movie.id,
       title: movie.title,
       tagline: movie.tagline,
-      actors: Enum.map(movie.actors, fn a -> render("actor.json", a) end),
-      distributor: render("distributor.json", %{distributor: movie.distributor})
     }
+    |> add_loaded_fields(movie)
   end
 
-  def render("actor.json", actor) do
+  defp _render("actor.json", actor) do
     MoviesWeb.ActorView.render("actor.json", %{actor: actor})
   end
 
-  def render("distributor.json", %{distributor: nil}) do
+  defp _render("distributor.json", %{distributor: nil}) do
     "none"
   end
 
-  def render("distributor.json", %{distributor: distributor}) do
+  defp _render("distributor.json", %{distributor: distributor}) do
     IO.inspect distributor
     MoviesWeb.DistributorView.render("distributor.json", %{distributor: distributor})
+  end
+
+  @doc false
+  defp add_loaded_fields(map, movie) do
+    map
+    |> add_loaded_actors(movie.actors)
+    |> add_loaded_distributor(movie.distributor)
+  end
+
+  defp add_loaded_actors(map, actors) do
+    if actors != nil && Ecto.assoc_loaded?(actors) do
+      Map.put(map, :actors, Enum.map(actors, fn a -> _render("actor.json", a) end))
+    else
+      map
+    end
+  end
+
+  defp add_loaded_distributor(map, distributor) do
+    if distributor != nil && Ecto.assoc_loaded?(distributor) do
+      Map.put(map, :distributor, _render("distributor.json", %{distributor: distributor}))
+    else
+      map
+    end
   end
 end

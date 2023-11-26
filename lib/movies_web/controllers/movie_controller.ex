@@ -6,6 +6,12 @@ defmodule MoviesWeb.MovieController do
 
   action_fallback MoviesWeb.FallbackController
 
+  def index(%{params: %{"detailed" => "true"}} = conn, _params) do
+    movies = Moviez.list_movies()
+    movies = Enum.map(movies, fn m -> Movies.Repo.preload(m, [:actors, :distributor]) end)
+    render(conn, "index.json", movies: movies)
+  end
+
   def index(conn, _params) do
     movies = Moviez.list_movies()
     render(conn, "index.json", movies: movies)

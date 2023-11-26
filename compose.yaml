@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  db:
+  db_service:
     image: postgres:latest
     container_name: postgres_db
     environment:
@@ -13,3 +13,18 @@ services:
       - 5432:5432
     volumes:
       - "./data/postgres_data:/var/lib/postgresql/data"
+  movies_service:
+    container_name: movies_service
+    depends_on:
+      - db_service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DB_USER=user
+      - DB_PASS=pass
+      - DB_HOST=postgres_db
+      - MIX_ENV=dev
+      - DEBUG=true
+    ports:
+      - 4000:4000

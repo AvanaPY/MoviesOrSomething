@@ -4,6 +4,7 @@ defmodule Movies.Application do
   @moduledoc false
 
   use Application
+  require Movies.Debugger
 
   @impl true
   def start(_type, _args) do
@@ -19,6 +20,11 @@ defmodule Movies.Application do
       # Start a worker by calling: Movies.Worker.start_link(arg)
       # {Movies.Worker, arg}
     ]
+    with conf = Application.get_env(:movies, Movies.Repo),
+         _hostname <- conf[:hostname],
+         _port <- conf[:port] do
+        Movies.Debugger.debug("Listening to DB on #{_hostname}:#{_port}")
+    end
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

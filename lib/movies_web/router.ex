@@ -8,6 +8,8 @@ defmodule MoviesWeb.Router do
   scope "/api", MoviesWeb do
     pipe_through :api
 
+    get "/", IndexController, :index
+
     get "/actors", ActorController, :index
     post "/actors/create", ActorController, :create
 
