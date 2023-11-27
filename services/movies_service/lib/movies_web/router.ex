@@ -12,9 +12,11 @@ defmodule MoviesWeb.Router do
 
     get "/actors", ActorController, :index
     post "/actors/create", ActorController, :create
+    post "/actors/update", ActorController, :update
+    post "/actors/delete", ActorController, :delete
 
     get  "/movies", MovieController, :index
-    get "/movies/get/:id", MovieController, :show
+    get  "/movies/get/:id", MovieController, :show
     post "/movies/create", MovieController, :create
     post "/movies/delete", MovieController, :delete
     post "/movies/update", MovieController, :update

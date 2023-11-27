@@ -19,18 +19,25 @@ defmodule MoviesWeb.MovieView do
     |> add_loaded_fields(movie)
   end
 
+  # I am 100,000% sure that this is awful code design but I'm just trying out funny things
+  # ok?
+
+  @doc false
   defp _render("actor.json", actor) do
     MoviesWeb.ActorView.render("actor.json", %{actor: actor})
   end
 
+  @doc false
   defp _render("distributor.json", %{distributor: nil}) do
     "none"
   end
 
+  @doc false
   defp _render("distributor.json", %{distributor: distributor}) do
     MoviesWeb.DistributorView.render("distributor.json", %{distributor: distributor})
   end
 
+  @doc false
   defp _render("ratings.json", rating) do
     MoviesWeb.MovieRatingView.render("movie_rating.json", %{movie_rating: rating})
   end
@@ -43,6 +50,7 @@ defmodule MoviesWeb.MovieView do
     |> add_loaded_ratings(movie.ratings)
   end
 
+  @doc false
   defp add_loaded_actors(map, actors) do
     if actors != nil && Ecto.assoc_loaded?(actors) do
       Map.put(map, :actors, Enum.map(actors, fn a -> _render("actor.json", a) end))
@@ -51,6 +59,7 @@ defmodule MoviesWeb.MovieView do
     end
   end
 
+  @doc false
   defp add_loaded_distributor(map, distributor) do
     if distributor != nil && Ecto.assoc_loaded?(distributor) do
       Map.put(map, :distributor, _render("distributor.json", %{distributor: distributor}))
@@ -59,6 +68,7 @@ defmodule MoviesWeb.MovieView do
     end
   end
 
+  @doc false
   def add_loaded_ratings(map, ratings) do
     if ratings != nil && Ecto.assoc_loaded?(ratings) do
       Map.put(map, :ratings, Enum.map(ratings, fn r -> _render("ratings.json", r) end))
