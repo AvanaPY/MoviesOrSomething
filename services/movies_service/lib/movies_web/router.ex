@@ -17,5 +17,7 @@ defmodule MoviesWeb.Router do
     post "/movies/create", MovieController, :create
     post "/movies/delete", MovieController, :delete
     post "/movies/update", MovieController, :update
+
+    post "/movies/rate", MovieRatingController, :create
   end
 end
