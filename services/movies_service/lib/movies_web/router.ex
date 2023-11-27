@@ -11,10 +11,8 @@ defmodule MoviesWeb.Router do
     send_resp(conn, conn.status, "Nothing Found Here")
   end
 
-
   @impl Plug.ErrorHandler
   def handle_errors(conn, %{kind: kind, reason: reason, stack: stack}) do
-    IO.inspect reason
     send_resp(conn, conn.status, "Something went wrong")
   end
 

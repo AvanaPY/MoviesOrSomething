@@ -38,7 +38,7 @@ defmodule MoviesWeb.MovieController do
   def update(conn, %{"movie" => movie_params}) do
     %{"title" => title} = movie_params
     movie = case Moviez.get_by_tile(title) do
-      nil -> {:ok, m} = Moviez.create_movie(movie_params)
+      nil -> {:ok, m} = Moviez.create_movie(movie_params, %{preload: true})
              m
       m -> m
     end
@@ -50,8 +50,7 @@ defmodule MoviesWeb.MovieController do
 
     distributor = Map.get(movie_params, "distributor")
 
-    with {:ok, %Movie{} = movie} <- Moviez.update_movie(movie, actors, distributor, movie_params),
-                           movie <- Moviez.get_movie!(movie.id) do
+    with {:ok, %Movie{} = movie} <- Moviez.update_movie(movie, actors, distributor, movie_params) do
       render(conn, "show.json", movie: movie)
     end
   end

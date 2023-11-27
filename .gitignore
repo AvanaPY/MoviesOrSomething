@@ -21,4 +21,8 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 movies-*.tar
 
+# Ignore postgres data
 data
+
+# Ignore vscode workspace settings
+.vscode
