@@ -8,7 +8,7 @@ defmodule MoviesWeb.MovieController do
 
   def index(%{params: %{"detailed" => "true"}} = conn, _params) do
     movies = Moviez.list_movies()
-    movies = Enum.map(movies, fn m -> Movies.Repo.preload(m, [:actors, :distributor]) end)
+    movies = Enum.map(movies, fn m -> Movies.Repo.preload(m, [:actors, :distributor, :ratings]) end)
     render(conn, "index.json", movies: movies)
   end
 
@@ -25,12 +25,19 @@ defmodule MoviesWeb.MovieController do
     end
   end
 
+  def show(conn, %{"detailed" => "true", "id" => id}) do
+    movie = Moviez.get_movie!(id, %{detailed: true})
+    render(conn, "show.json", movie: movie)
+  end
+
   def show(conn, %{"id" => id}) do
     movie = Moviez.get_movie!(id)
     render(conn, "show.json", movie: movie)
   end
 
-  def update(conn, %{"movie" => movie_params}) do
+  def update(conn, %{"movie" => movie_params} = params) do
+    IO.inspect conn
+    IO.inspect params
     %{"title" => title} = movie_params
     movie = case Moviez.get_by_tile(title) do
       nil -> {:ok, m} = Moviez.create_movie(movie_params)

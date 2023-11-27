@@ -28,8 +28,11 @@ defmodule MoviesWeb.MovieView do
   end
 
   defp _render("distributor.json", %{distributor: distributor}) do
-    IO.inspect distributor
     MoviesWeb.DistributorView.render("distributor.json", %{distributor: distributor})
+  end
+
+  defp _render("ratings.json", rating) do
+    MoviesWeb.MovieRatingView.render("movie_rating.json", %{movie_rating: rating})
   end
 
   @doc false
@@ -37,6 +40,7 @@ defmodule MoviesWeb.MovieView do
     map
     |> add_loaded_actors(movie.actors)
     |> add_loaded_distributor(movie.distributor)
+    |> add_loaded_ratings(movie.ratings)
   end
 
   defp add_loaded_actors(map, actors) do
@@ -50,6 +54,14 @@ defmodule MoviesWeb.MovieView do
   defp add_loaded_distributor(map, distributor) do
     if distributor != nil && Ecto.assoc_loaded?(distributor) do
       Map.put(map, :distributor, _render("distributor.json", %{distributor: distributor}))
+    else
+      map
+    end
+  end
+
+  def add_loaded_ratings(map, ratings) do
+    if ratings != nil && Ecto.assoc_loaded?(ratings) do
+      Map.put(map, :ratings, Enum.map(ratings, fn r -> _render("ratings.json", r) end))
     else
       map
     end

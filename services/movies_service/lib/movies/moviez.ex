@@ -35,7 +35,9 @@ defmodule Movies.Moviez do
       ** (Ecto.NoResultsError)
 
   """
-  def get_movie!(id), do: Repo.get!(Movie, id) |> Repo.preload([:actors, :distributor, :characters])
+  def get_movie!(id, %{detailed: true}), do: get_movie!(id) |> Repo.preload([:actors, :distributor, :characters, :ratings])
+  def get_movie!(id), do: Repo.get!(Movie, id)
+
   def get_by_tile(title), do: Repo.get_by(Movie, title: title) |> Repo.preload([:actors, :distributor, :characters])
   @doc """
   Creates a movie.
