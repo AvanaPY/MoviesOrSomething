@@ -37,6 +37,11 @@ defmodule Movies.MoviesActors do
   """
   def get_movie_actor!(id), do: Repo.get!(MovieActor, id)
 
+  def get_movie_actor!(movie_id, actor_id) do
+    Repo.get_by(MovieActor, [movie_id: movie_id, actor_id: actor_id])
+    |> IO.inspect
+  end
+
   @doc """
   Creates a movie_actor.
 

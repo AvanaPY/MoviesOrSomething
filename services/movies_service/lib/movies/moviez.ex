@@ -35,10 +35,10 @@ defmodule Movies.Moviez do
       ** (Ecto.NoResultsError)
 
   """
-  def get_movie!(id, %{detailed: true}), do: get_movie!(id) |> Repo.preload([:actors, :distributor, :ratings])
+  def get_movie!(id, %{detailed: true}), do: get_movie!(id) |> Repo.preload([:movies_actors, :distributor, :ratings])
   def get_movie!(id), do: Repo.get!(Movie, id)
 
-  def get_by_tile(title), do: Repo.get_by(Movie, title: title) |> Repo.preload([:actors, :distributor, :ratings])
+  def get_by_tile(title), do: Repo.get_by(Movie, title: title) |> Repo.preload([:movies_actors, :distributor, :ratings])
   @doc """
   Creates a movie.
 
@@ -59,7 +59,7 @@ defmodule Movies.Moviez do
 
   def create_movie(attrs, %{preload: true}) do
     with {:ok, m} <- %Movie{} |> Movie.changeset(attrs) |> Repo.insert() do
-      {:ok, m |> Repo.preload([:actors, :distributor, :ratings])}
+      {:ok, m |> Repo.preload([:movies_actors, :distributor, :ratings])}
     end
   end
 
@@ -85,27 +85,6 @@ defmodule Movies.Moviez do
   def update_movie(%Movie{} = movie, attrs) do
     movie
     |> Movie.changeset(attrs)
-    |> Repo.update()
-  end
-
-  def update_movie(%Movie{} = movie, actors, distributor_attrs, attrs) do
-    IO.inspect movie
-    if movie.distributor == nil do
-      distrib = movie
-      |> Ecto.build_assoc(:distributor, distributor_attrs)
-      # |> Movies.Distributors.Distributor.changeset(distributor_attrs)
-      |> Repo.insert!
-
-      IO.inspect distrib
-    else
-      Movies.Distributors.update_distributor(movie.distributor, distributor_attrs)
-    end
-
-    actors = Enum.map(actors, fn a -> Movies.Actors.create_or_get_by_name(a) end)
-    movie
-    |> Movie.changeset(attrs)
-    |> Ecto.Changeset.put_assoc(:actors, actors)
-    |> IO.inspect
     |> Repo.update()
   end
 

@@ -12,7 +12,9 @@ defmodule MoviesWeb.MovieActorView do
 
   def render("movie_actor.json", %{movie_actor: movie_actor}) do
     %{
-      id: movie_actor.id
+      movie: MoviesWeb.MovieView.render("movie.json", %{movie: movie_actor.movie}),
+      actor: movie_actor.actor_id,
+      character: movie_actor.character_name
     }
   end
 end

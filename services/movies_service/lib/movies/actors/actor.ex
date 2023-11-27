@@ -4,7 +4,8 @@ defmodule Movies.Actors.Actor do
 
   schema "actors" do
     field :name, :string
-    many_to_many :movies, Movies.Moviez.Movie, join_through: "movies_actors"
+    has_many :movies_actors, Movies.MoviesActors.MovieActor
+    # many_to_many :movies, Movies.Moviez.Movie, join_through: "movies_actors"
 
     timestamps()
   end

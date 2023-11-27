@@ -14,17 +14,17 @@ defmodule MoviesWeb.MovieView do
     %{
       id: movie.id,
       title: movie.title,
-      tagline: movie.tagline,
+      tagline: movie.tagline
     }
     |> add_loaded_fields(movie)
   end
 
-  # I am 100,000% sure that this is awful code design but I'm just trying out funny things
+  # I am 1,000% sure that this is awful code design but I'm just trying out funny things
   # ok?
 
   @doc false
-  defp _render("actor.json", actor) do
-    MoviesWeb.ActorView.render("actor.json", %{actor: actor})
+  defp _render("movies_actors.json", movie_actor) do
+    MoviesWeb.MovieActorView.render("movie_actor.json", %{movie_actor: movie_actor})
   end
 
   @doc false
@@ -45,15 +45,24 @@ defmodule MoviesWeb.MovieView do
   @doc false
   defp add_loaded_fields(map, movie) do
     map
-    |> add_loaded_actors(movie.actors)
+    |> add_loaded_movies_actors(movie.movies_actors)
     |> add_loaded_distributor(movie.distributor)
     |> add_loaded_ratings(movie.ratings)
   end
 
   @doc false
-  defp add_loaded_actors(map, actors) do
-    if actors != nil && Ecto.assoc_loaded?(actors) do
-      Map.put(map, :actors, Enum.map(actors, fn a -> _render("actor.json", a) end))
+  defp add_loaded_movies_actors(map, movies_actors) do
+    if movies_actors != nil && Ecto.assoc_loaded?(movies_actors) do
+      Map.put(
+        map,
+        :roles,
+        Enum.map(movies_actors, fn a ->
+          %{
+            actor: a.actor.name,
+            character: a.character_name
+          }
+        end)
+      )
     else
       map
     end
@@ -64,7 +73,7 @@ defmodule MoviesWeb.MovieView do
     if distributor != nil && Ecto.assoc_loaded?(distributor) do
       Map.put(map, :distributor, _render("distributor.json", %{distributor: distributor}))
     else
-      map
+      Map.put(map, :distributor, nil)
     end
   end
 

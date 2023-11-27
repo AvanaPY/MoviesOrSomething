@@ -7,7 +7,8 @@ defmodule Movies.Moviez.Movie do
     field :title, :string
     has_many :ratings, Movies.MovieRatings.MovieRating
     has_one :distributor, Movies.Distributors.Distributor
-    many_to_many :actors, Movies.Actors.Actor, join_through: "movies_actors"
+    has_many :movies_actors, Movies.MoviesActors.MovieActor
+    # many_to_many :actors, Movies.Actors.Actor, join_through: "movies_actors"
     timestamps()
   end
 
