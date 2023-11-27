@@ -35,9 +35,7 @@ defmodule MoviesWeb.MovieController do
     render(conn, "show.json", movie: movie)
   end
 
-  def update(conn, %{"movie" => movie_params} = params) do
-    IO.inspect conn
-    IO.inspect params
+  def update(conn, %{"movie" => movie_params}) do
     %{"title" => title} = movie_params
     movie = case Moviez.get_by_tile(title) do
       nil -> {:ok, m} = Moviez.create_movie(movie_params)

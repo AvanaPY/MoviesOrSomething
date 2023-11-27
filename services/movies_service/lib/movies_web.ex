@@ -45,7 +45,7 @@ defmodule MoviesWeb do
   def router do
     quote do
       use Phoenix.Router
-
+      use Plug.ErrorHandler
       import Plug.Conn
       import Phoenix.Controller
     end
