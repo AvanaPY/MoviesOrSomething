@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movies-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: movies-service
+  template:
+    metadata:
+      labels:
+        app: movies-service
+    spec:
+      containers:
+      - name: movies-service
+        image: emilkarlstrombth/movies_service_backend:1
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 4000
+        envFrom:
+          - configMapRef:
+              name: movies-service-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: movies-service-balancer
+spec:
+  type: LoadBalancer
+  selector:
+    app: movies-service
+  ports:
+  - port: 4000
+    targetPort: 4000
+    protocol: TCP
