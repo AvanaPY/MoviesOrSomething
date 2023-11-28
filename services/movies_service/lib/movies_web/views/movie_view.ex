@@ -42,6 +42,10 @@ defmodule MoviesWeb.MovieView do
     MoviesWeb.MovieRatingView.render("movie_rating.json", %{movie_rating: rating})
   end
 
+  defp _render("actor.json", actor) do
+    MoviesWeb.ActorView.render("actor.json", %{actor: actor})
+  end
+
   @doc false
   defp add_loaded_fields(map, movie) do
     map
@@ -60,14 +64,14 @@ defmodule MoviesWeb.MovieView do
           case Ecto.assoc_loaded?(a.actor) do
             true ->
               %{
-                actor: a.actor.name,
+                actor: _render("actor.json", a.actor),
                 role: %{
                   character_name: a.character_name
                 }
               }
             false ->
               %{
-                "actor": "N/A",
+                actor: "N/A",
                 role: %{
                   character_name: a.character_name
                 }

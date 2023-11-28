@@ -49,11 +49,16 @@ defmodule Movies.Actors do
   """
   def create_or_get_by_name(%{"name" => name} = attrs) do
     case Repo.get_by(Actor, name: name) do
-      nil -> {:ok, actor} = create_actor(attrs)
-               actor
-      actor -> actor
+      nil ->
+        with {:ok, actor} <- create_actor(attrs) do
+          actor
+        end
+
+      actor ->
+        actor
     end
   end
+
   @doc """
   Creates a actor.
 
