@@ -11,7 +11,7 @@ defmodule MoviesWeb.MovieController do
 
     movies =
       Enum.map(movies, fn m ->
-        Movies.Repo.preload(m, [:distributor, :ratings, movies_actors: [:actor],])
+        Movies.Repo.preload(m, [:distributor, :ratings, movies_actors: [:actor]])
       end)
 
     render(conn, "index.json", movies: movies)
@@ -41,49 +41,46 @@ defmodule MoviesWeb.MovieController do
   end
 
   def update(conn, %{"movie" => movie_params}) do
-    %{"title" => title} = movie_params
+    with %{"title" => title} <- movie_params,
+         {:ok, movie} <- Moviez.get_by_tile(title),
+         movie <- Movies.Repo.preload(movie, [:distributor, :ratings, movies_actors: [:actor]]),
+         {:ok, %Movie{} = movie} <- Moviez.update_movie(movie, movie_params) do
+      movie =
+        movie
+        |> update_movie_distributor(movie_params)
 
-    movie =
-      case Moviez.get_by_tile(title) do
-        nil ->
-          {:ok, m} = Moviez.create_movie(movie_params, %{preload: true})
-          m
+      render(conn, "movie.json", %{movie: movie})
+    end
 
-        movie ->
-          {:ok, %Movie{} = movie} = Moviez.update_movie(movie, movie_params)
-          movie
-      end
+    # %{"actors" => actors_params} = movie_params
+    # {:ok, movie} = make_actor_associations(movie, actors_params)
 
-    # Update distributor of a movie
-    movie =
-      with %{"distributor" => distributor_params} <- movie_params do
-        if movie.distributor == nil do
-          distrib =
-            Ecto.build_assoc(movie, :distributor)
-            |> Movies.Distributors.Distributor.changeset(distributor_params)
-            |> Movies.Repo.insert!()
+    # movie =
+    #   Moviez.get_movie!(movie.id)
+    #   |> Movies.Repo.preload([:distributor, :ratings, movies_actors: [:actor, :movie]])
+  end
 
-          Map.put(movie, :distributor, distrib)
-        else
-          distrib =
-            movie.distributor
-            |> Movies.Distributors.Distributor.changeset(distributor_params)
-            |> Movies.Repo.update!()
+  defp update_movie_distributor(movie, movie_params) do
+    case Map.get(movie_params, "distributor") do
+      nil ->
+        movie
 
-          Map.put(movie, :distributor, distrib)
-        end
-      end
+      distributor_params ->
+        distrib =
+          case movie.distributor do
+            nil ->
+              Ecto.build_assoc(movie, :distributor)
+              |> Movies.Distributors.Distributor.changeset(distributor_params)
+              |> Movies.Repo.insert!()
 
-    # Distributor updated
-    ##############################
-    %{"actors" => actors_params} = movie_params
-    {:ok, movie} = make_actor_associations(movie, actors_params)
+            d ->
+              d
+              |> Movies.Distributors.Distributor.changeset(distributor_params)
+              |> Movies.Repo.update!()
+          end
 
-    movie =
-      Moviez.get_movie!(movie.id)
-      |> Movies.Repo.preload([:distributor, :ratings, movies_actors: [:actor, :movie]])
-
-    render(conn, "movie.json", %{movie: movie})
+        Map.put(movie, :distributor, distrib)
+    end
   end
 
   defp make_actor_associations(movie, actors_params) do
