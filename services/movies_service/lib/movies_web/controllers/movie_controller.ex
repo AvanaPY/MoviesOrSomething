@@ -11,7 +11,7 @@ defmodule MoviesWeb.MovieController do
 
     movies =
       Enum.map(movies, fn m ->
-        Movies.Repo.preload(m, [:movies_actors, :distributor, :ratings])
+        Movies.Repo.preload(m, [:distributor, :ratings, movies_actors: [:actor],])
       end)
 
     render(conn, "index.json", movies: movies)

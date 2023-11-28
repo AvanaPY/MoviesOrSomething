@@ -57,10 +57,22 @@ defmodule MoviesWeb.MovieView do
         map,
         :roles,
         Enum.map(movies_actors, fn a ->
-          %{
-            actor: a.actor.name,
-            character: a.character_name
-          }
+          case Ecto.assoc_loaded?(a.actor) do
+            true ->
+              %{
+                actor: a.actor.name,
+                role: %{
+                  character_name: a.character_name
+                }
+              }
+            false ->
+              %{
+                "actor": "N/A",
+                role: %{
+                  character_name: a.character_name
+                }
+              }
+          end
         end)
       )
     else
@@ -73,7 +85,7 @@ defmodule MoviesWeb.MovieView do
     if distributor != nil && Ecto.assoc_loaded?(distributor) do
       Map.put(map, :distributor, _render("distributor.json", %{distributor: distributor}))
     else
-      Map.put(map, :distributor, nil)
+      map
     end
   end
 
