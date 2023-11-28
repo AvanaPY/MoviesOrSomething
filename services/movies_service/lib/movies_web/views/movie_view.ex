@@ -91,7 +91,7 @@ defmodule MoviesWeb.MovieView do
         end)
       )
     else
-      map
+      Map.put(map, :roles, "N/A")
     end
   end
 
@@ -100,7 +100,7 @@ defmodule MoviesWeb.MovieView do
     if distributor != nil && Ecto.assoc_loaded?(distributor) do
       Map.put(map, :distributor, _render("distributor.json", %{distributor: distributor}))
     else
-      map
+      Map.put(map, :distributor, "N/A")
     end
   end
 
@@ -109,7 +109,7 @@ defmodule MoviesWeb.MovieView do
     if ratings != nil && Ecto.assoc_loaded?(ratings) do
       Map.put(map, :ratings, Enum.map(ratings, fn r -> _render("ratings.json", r) end))
     else
-      map
+      Map.put(map, :ratings, "N/A")
     end
   end
 end

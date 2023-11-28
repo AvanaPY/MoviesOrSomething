@@ -21,4 +21,11 @@ defmodule MoviesWeb.FallbackController do
     |> put_view(MoviesWeb.ErrorView)
     |> render(:"404")
   end
+
+  def call(conn, {:error, :invalid_format}) do
+    conn
+    |> put_status(:not_found)
+    |> put_view(MoviesWeb.ErrorView)
+    |> render(:"404")
+  end
 end
