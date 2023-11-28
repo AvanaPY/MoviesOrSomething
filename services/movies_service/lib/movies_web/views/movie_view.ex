@@ -14,7 +14,17 @@ defmodule MoviesWeb.MovieView do
     %{
       id: movie.id,
       title: movie.title,
-      tagline: movie.tagline
+      tagline: movie.tagline,
+      release_year: movie.release_year,
+      director: movie.director,
+      length_minutes: movie.length_minutes,
+      language: movie.language,
+      budget: movie.budget,
+      box_office:
+        case movie.box_office do
+          nil -> "N/A"
+          n -> n
+        end
     }
     |> add_loaded_fields(movie)
   end
@@ -69,6 +79,7 @@ defmodule MoviesWeb.MovieView do
                   character_name: a.character_name
                 }
               }
+
             false ->
               %{
                 actor: "N/A",
