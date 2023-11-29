@@ -15,7 +15,6 @@ def index(page):
 @movies.route('/movies/<id>')
 def movies_id(id):
     status, content = get_from_api(f'/movies/get/{id}', params="detailed=true")
-    print(content)
     if status != 200:
         abort(404)
     return render_template_m(f'movies/movie.html', movie=content.get('data'))
