@@ -14,7 +14,17 @@ defmodule MoviesWeb.MovieView do
     %{
       id: movie.id,
       title: movie.title,
-      tagline: movie.tagline
+      tagline: movie.tagline,
+      release_year: movie.release_year,
+      director: movie.director,
+      length_minutes: movie.length_minutes,
+      language: movie.language,
+      budget: movie.budget,
+      box_office:
+        case movie.box_office do
+          nil -> "N/A"
+          n -> n
+        end
     }
     |> add_loaded_fields(movie)
   end
@@ -42,6 +52,10 @@ defmodule MoviesWeb.MovieView do
     MoviesWeb.MovieRatingView.render("movie_rating.json", %{movie_rating: rating})
   end
 
+  defp _render("actor.json", actor) do
+    MoviesWeb.ActorView.render("actor.json", %{actor: actor})
+  end
+
   @doc false
   defp add_loaded_fields(map, movie) do
     map
@@ -60,14 +74,15 @@ defmodule MoviesWeb.MovieView do
           case Ecto.assoc_loaded?(a.actor) do
             true ->
               %{
-                actor: a.actor.name,
+                actor: _render("actor.json", a.actor),
                 role: %{
                   character_name: a.character_name
                 }
               }
+
             false ->
               %{
-                "actor": "N/A",
+                actor: "N/A",
                 role: %{
                   character_name: a.character_name
                 }
@@ -76,7 +91,7 @@ defmodule MoviesWeb.MovieView do
         end)
       )
     else
-      map
+      Map.put(map, :roles, "N/A")
     end
   end
 
@@ -85,7 +100,7 @@ defmodule MoviesWeb.MovieView do
     if distributor != nil && Ecto.assoc_loaded?(distributor) do
       Map.put(map, :distributor, _render("distributor.json", %{distributor: distributor}))
     else
-      map
+      Map.put(map, :distributor, "N/A")
     end
   end
 
@@ -94,7 +109,7 @@ defmodule MoviesWeb.MovieView do
     if ratings != nil && Ecto.assoc_loaded?(ratings) do
       Map.put(map, :ratings, Enum.map(ratings, fn r -> _render("ratings.json", r) end))
     else
-      map
+      Map.put(map, :ratings, "N/A")
     end
   end
 end

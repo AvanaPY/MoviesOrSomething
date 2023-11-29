@@ -37,6 +37,18 @@ defmodule Movies.Actors do
   """
   def get_actor!(id), do: Repo.get!(Actor, id)
 
+  def get_by_full_name(fullname) do
+    names = String.split(fullname, " ")
+    case names do
+      [name, last_name] ->
+        case Repo.get_by(Actor, name: name, last_name: last_name) do
+          nil -> {:error, :not_found}
+          actor -> {:ok, actor}
+        end
+      _ -> {:error, :invalid_format}
+    end
+  end
+
   @doc """
   Creates or gets a single actor from the database if it doesn't exist
 
@@ -49,11 +61,16 @@ defmodule Movies.Actors do
   """
   def create_or_get_by_name(%{"name" => name} = attrs) do
     case Repo.get_by(Actor, name: name) do
-      nil -> {:ok, actor} = create_actor(attrs)
-               actor
-      actor -> actor
+      nil ->
+        with {:ok, actor} <- create_actor(attrs) do
+          actor
+        end
+
+      actor ->
+        actor
     end
   end
+
   @doc """
   Creates a actor.
 

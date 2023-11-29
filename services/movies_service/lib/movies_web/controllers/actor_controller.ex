@@ -19,11 +19,6 @@ defmodule MoviesWeb.ActorController do
     end
   end
 
-  def create(conn, _) do
-    IO.inspect conn
-    text conn, "OWO"
-  end
-
   def show(conn, %{"id" => id}) do
     actor = Actors.get_actor!(id)
     render(conn, "show.json", actor: actor)

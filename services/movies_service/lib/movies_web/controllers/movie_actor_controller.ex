@@ -3,6 +3,10 @@ defmodule MoviesWeb.MovieActorController do
 
   alias Movies.MoviesActors
   alias Movies.MoviesActors.MovieActor
+  alias Movies.Moviez
+  alias Movies.Moviez.Movie
+  alias Movies.Actors
+  alias Movies.Actors.Actor
 
   action_fallback MoviesWeb.FallbackController
 
@@ -11,11 +15,51 @@ defmodule MoviesWeb.MovieActorController do
     render(conn, "index.json", movies_actors: movies_actors)
   end
 
-  def create(conn, %{"movie_actor" => movie_actor_params}) do
-    with {:ok, %MovieActor{} = movie_actor} <- MoviesActors.create_movie_actor(movie_actor_params) do
-      conn
-      |> put_status(:created)
-      |> render("show.json", movie_actor: movie_actor)
+  def create(conn, %{
+        "movie_name" => movie_name,
+        "actor_name" => actor_name,
+        "movie_actor" => movies_actor_params
+      }) do
+    with {:ok, %Movie{} = movie} <- Moviez.get_by_tile(movie_name),
+         {:ok, %Actor{} = actor} <- Actors.get_by_full_name(actor_name) do
+      movie_actor =
+        case MoviesActors.get_movie_actor_by(movie.id, actor.id) do
+          {:error, :not_found} ->
+            Ecto.build_assoc(movie, :movies_actors)
+            |> Ecto.Changeset.change()
+            |> Ecto.Changeset.put_assoc(:actor, actor)
+            |> MovieActor.changeset(movies_actor_params)
+            |> Movies.Repo.insert!()
+
+          {:ok, movie_actor} ->
+            movie_actor
+        end
+
+      render(conn, "show.json", movie_actor: movie_actor)
+    end
+  end
+
+  def create(conn, %{
+        "movie_id" => movie_id,
+        "actor_id" => actor_id,
+        "movie_actor" => movies_actor_params
+      }) do
+    with %Movie{} = movie <- Moviez.get_movie!(movie_id),
+         %Actor{} = actor <- Actors.get_actor!(actor_id) do
+      movie_actor =
+        case MoviesActors.get_movie_actor_by(movie_id, actor_id) do
+          {:error, :not_found} ->
+            Ecto.build_assoc(movie, :movies_actors)
+            |> Ecto.Changeset.change()
+            |> Ecto.Changeset.put_assoc(:actor, actor)
+            |> MovieActor.changeset(movies_actor_params)
+            |> Movies.Repo.insert!()
+
+          {:ok, movie_actor} ->
+            movie_actor
+        end
+
+      render(conn, "show.json", movie_actor: movie_actor)
     end
   end
 
@@ -27,7 +71,8 @@ defmodule MoviesWeb.MovieActorController do
   def update(conn, %{"id" => id, "movie_actor" => movie_actor_params}) do
     movie_actor = MoviesActors.get_movie_actor!(id)
 
-    with {:ok, %MovieActor{} = movie_actor} <- MoviesActors.update_movie_actor(movie_actor, movie_actor_params) do
+    with {:ok, %MovieActor{} = movie_actor} <-
+           MoviesActors.update_movie_actor(movie_actor, movie_actor_params) do
       render(conn, "show.json", movie_actor: movie_actor)
     end
   end
