@@ -12,7 +12,7 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: "/mnt/postgresdata"
+    path: "/mnt/pgdata"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

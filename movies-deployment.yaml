@@ -14,11 +14,10 @@ spec:
     spec:
       containers:
       - name: movies-service
-        image: emilkarlstrombth/movies_service_backend:1
-        imagePullPolicy: Never
+        image: emilkarlstrombth/movies_service_backend:latest
         resources:
           limits:
-            memory: "128Mi"
+            memory: "256Mi"
             cpu: "500m"
         ports:
         - containerPort: 4000

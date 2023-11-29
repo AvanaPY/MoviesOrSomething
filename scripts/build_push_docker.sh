@@ -11,7 +11,8 @@ fi
 tag=$1
 
 echo "Building docker container..."
-docker build -t emilkarlstrombth/movies_service_backend:$tag services/movies_service
+docker build -t "emilkarlstrombth/movies_service_backend:${tag}" -t emilkarlstrombth/movies_service_backend:latest services/movies_service
 
 echo "Pushing to docker hub..."
-docker push emilkarlstrombth/movies_service_backend:$tag
+docker push "emilkarlstrombth/movies_service_backend:${tag}"
+docker push "emilkarlstrombth/movies_service_backend:latest"
