@@ -26,3 +26,6 @@ data
 
 # Ignore vscode workspace settings
 .vscode
+
+# Python compile files
+*.pyc
