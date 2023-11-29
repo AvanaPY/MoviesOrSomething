@@ -10,12 +10,15 @@ def index(page):
     status, content = get_from_api('/actors')
     if status != 200:
         abort(500)
-    return render_template_m(f'actors/{page}.html', actors=content.get('data'))
+    actors = content.get('data')
+    actors = sorted(actors, key=lambda a : f'{a.get("name")} {a.get("last_name")}')
+    return render_template_m(f'actors/{page}.html', actors=actors)
 
 @actors.route('/actors/<id>')
 def actors_id(id):
     status, content = get_from_api(f'/actors/{id}', params="detailed=true")
-    print(content)
     if status != 200:
         abort(404)
-    return render_template_m(f'actors/actor.html', actor=content.get('data'))
+
+    actor = content.get('data')
+    return render_template_m(f'actors/actor.html', actor=actor)

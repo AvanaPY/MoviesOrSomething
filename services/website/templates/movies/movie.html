@@ -8,8 +8,13 @@
 <div class="content">
     <div class="movie-div">
         <div class="movie-general">
-            <div class="movie-title">
-                <label for="title"> {{ movie.title }}</a></label>
+            <div class="movie-header">
+                <div class="movie-title">
+                    <label for="title"> {{ movie.title }}</a></label>
+                </div>
+                <div class="movie-rating-container">
+                    <p>Average Rating: {{ movie.average_rating }}</p>
+                </div>
             </div>
             <div class="movie-details-basic">
                 <label for="release-year">{{ movie.release_year }}</label>
@@ -58,6 +63,18 @@
                             </a>
                             as {{ role.role.character_name }}
                         </div>
+                        {% endfor %}
+                    </div>
+                </label>
+            </div>
+            <div class="movie-detail">
+                <label for="movie-ratings">
+                    <h1>Reviews</h1>
+                    <div class="movie-rating-entries">
+                        {% for rating in (movie.ratings|sort(attribute="rating", reverse=true))[:10] %}
+                        {% with rating=rating %}
+                            {% include "movies/rating.html" %}
+                        {% endwith %}
                         {% endfor %}
                     </div>
                 </label>

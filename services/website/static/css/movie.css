@@ -15,10 +15,17 @@
     border-bottom: 1px solid currentColor;
 }
 
+.movie-header {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    line-height: 2rem;
+    padding-bottom: 0.5rem;
+}
+
 .movie-title {
     font-weight: initial;
     font-size: 28px;
-    padding-bottom: 0.5rem;
 }
 
 .movie-title label a {
@@ -27,6 +34,10 @@
     text-underline-offset: 4px;
     text-decoration-color: currentColor;
     color: inherit;
+}
+
+.movie-rating-container {
+    display: flex;
 }
 
 .movie-details-basic label {
@@ -81,6 +92,43 @@
     display: flex;
     flex-direction: column;
 }
+
 .movie-actor-role-entry {
     display: block;
+}
+
+.movie-rating {
+    width: 100%;
+}
+
+.movie-rating-entries {
+    width: 100%;
+}
+
+.movie-rating-entry {
+    display: block;
+    border: 2px solid rgb(45, 45, 45);
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    margin: 0.2rem 0.4rem;
+
+    .rating-header {
+        display: flex;
+        justify-content: space-between;
+        font-weight: initial;
+        * {
+            margin:auto;
+        }
+    }
+
+    .rating-description {
+        width: 80%;
+        margin-left: 1rem;
+
+        
+    }
+}
+
+.rating-description p {
+    font-size: 12px;
 }
