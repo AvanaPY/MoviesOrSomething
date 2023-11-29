@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: rgb(18, 17, 17);
+    background: linear-gradient(90deg, rgba(18, 17, 17, 1) 0%, rgba(7, 52, 62, 1) 100%);
+    color: white;
+}
+
+.container {
+    /* margin: 0rem 10rem; */
+    width: 50%;
+    margin-left: 25%;
+}
