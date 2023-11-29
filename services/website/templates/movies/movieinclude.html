@@ -1,0 +1,15 @@
+<div class="movie-div">
+    <div class="movie-title">
+        <label for="title"><a href="/movies/{{ movie.id }}">{{ movie.title }}</a></label>
+    </div>
+    <div class="movie-details-basic">
+        <label for="release-year">{{ movie.release_year }}</label>
+        <label for="running-time">{{ movie.length_minutes }}m </label>
+        <label for="language"> {{ movie.language }} </label>
+    </div>
+    <div class="movie-description">
+        <p>
+            {{ movie.tagline }}
+        </p>
+    </div>
+</div>

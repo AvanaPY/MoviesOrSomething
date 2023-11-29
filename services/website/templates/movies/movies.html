@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/movies.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <ul>
+        {% for movie in movies %}
+        {% with movie=movie %}
+        {% include "movies/movieinclude.html" %}
+        {% endwith %}
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -18,10 +18,40 @@ defmodule MoviesWeb.ActorView do
       age: actor.age,
       country: actor.country,
       year_started: actor.year_started,
-      year_ended: case actor.year_ended do
-                    nil -> "Present"
-                    value -> value
-                  end
+      year_ended:
+        case actor.year_ended do
+          nil -> "Present"
+          value -> value
+        end
+    }
+  end
+
+  def render("show-preload.json", %{actor: actor}) do
+    IO.inspect actor
+    %{
+      data: %{
+        id: actor.id,
+        name: actor.name,
+        last_name: actor.last_name,
+        age: actor.age,
+        country: actor.country,
+        year_started: actor.year_started,
+        year_ended:
+          case actor.year_ended do
+            nil -> "Present"
+            value -> value
+          end,
+        roles: Enum.map(actor.movies_actors, fn ma ->
+          %{
+            character_name: ma.character_name,
+            movie: %{
+              id: ma.movie.id,
+              title: ma.movie.title,
+              year: ma.movie.release_year
+            }
+          }
+        end)
+      }
     }
   end
 end

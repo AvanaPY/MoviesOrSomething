@@ -1,0 +1,81 @@
+.content {
+    margin-top: 0.5rem;
+    border: 2px solid rgba(41, 41, 41, 0.8);
+    border-radius: 5px;
+}
+
+.actor-div {
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.actor-general {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid currentColor;
+}
+
+.actor-title {
+    font-weight: initial;
+    font-size: 24px;
+    padding-bottom: 0.5rem;
+}
+
+.actor-title label a {
+    display: block;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: currentColor;
+    color: inherit;
+}
+
+.actor-general-basic label {
+    padding-right: 1rem;
+}
+
+.actor-detail {
+    font-size: 20px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-top: 1px solid rgb(57, 57, 57);
+    display: flex;
+}
+
+.actor-detail label {
+    width: 100%;
+    display: flex;
+}
+
+.actor-detail label h1 {
+    display: inline-block;
+    width: 20%;
+    font-size: inherit;
+    color: inherit;
+}
+
+.actor-detail label p {
+    color: lightgray;
+    display: inline-block;
+}
+
+.actor-detail .role-ref {
+    color: rgb(138, 137, 252);
+}
+
+.actor-detail a {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+
+    :hover {
+        text-decoration: underline;
+    }
+}
+
+.actor-role-entries {
+    display: flex;
+    flex-direction: column;
+}
+.actor-role-entry {
+    display: block;
+}

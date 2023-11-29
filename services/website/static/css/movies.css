@@ -1,0 +1,42 @@
+#navbar-movies {
+    text-decoration: underline;
+}
+.content {
+    margin-top: 0.5rem;
+    border: 2px solid rgba(41, 41, 41, 0.8);
+    border-radius: 5px;
+}
+
+.movie-div {
+    padding: 1rem;
+    margin: 1rem;
+    border-bottom: 1px solid currentColor;
+    font-size: 18px;
+}
+
+.movie-title {
+    font-weight: initial;
+    font-size: 28px;
+    padding-bottom: 0.5rem;
+}
+
+.movie-title:hover {
+    color: rgb(171, 164, 164);
+}
+
+.movie-title label a {
+    display: block;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: currentColor;
+    color: inherit;
+}
+
+.movie-details-basic label {
+    padding-right: 1rem;
+}
+
+.movie-description {
+    padding: 0.5rem 0 0 1rem;
+    font-style: italic;
+}

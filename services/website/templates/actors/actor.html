@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/actor.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="actor-div">
+        <div class="actor-general">
+            <div class="actor-title">
+                <label for="title">{{ actor.name }} {{ actor.last_name }}</label>
+            </div>
+            <div class="actor-general-basic">
+                <label for="age">{{ actor.age }}</label>
+                <label for="country">{{ actor.country }} </label>
+                <label for="career-time">{{ actor.year_started }} - {{ actor.year_ended }} </label>
+            </div>
+        </div>
+        <div class="actor-detail">
+            <label for="actor-role">
+                <h1>Roles</h1>
+                <div class="actor-roles-entries">
+                    {% for role in actor.roles %}
+                    <div class="actor-role-entry">
+                        {{ role.character_name }} in 
+                        <a class="role-ref" href="/movies/{{ role.movie.id }}">
+                            {{ role.movie.title }} ({{ role.movie.year }})
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </label>
+        </div>
+    </div>
+</div>
+{% endblock %}

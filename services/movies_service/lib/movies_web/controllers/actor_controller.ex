@@ -19,6 +19,11 @@ defmodule MoviesWeb.ActorController do
     end
   end
 
+  def show(conn, %{"detailed" => "true", "id" => id}) do
+    actor = Actors.get_actor!(id) |> Movies.Repo.preload([movies_actors: [:movie]])
+    render(conn, "show-preload.json", actor: actor)
+  end
+
   def show(conn, %{"id" => id}) do
     actor = Actors.get_actor!(id)
     render(conn, "show.json", actor: actor)

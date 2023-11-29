@@ -1,0 +1,134 @@
+.content {
+    margin-top: 0.5rem;
+    border: 2px solid rgba(41, 41, 41, 0.8);
+    border-radius: 5px;
+}
+
+.movie-div {
+    padding: 1rem;
+    margin: 1rem;
+    font-size: 18px;
+}
+
+.movie-general {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid currentColor;
+}
+
+.movie-header {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    line-height: 2rem;
+    padding-bottom: 0.5rem;
+}
+
+.movie-title {
+    font-weight: initial;
+    font-size: 28px;
+}
+
+.movie-title label a {
+    display: block;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: currentColor;
+    color: inherit;
+}
+
+.movie-rating-container {
+    display: flex;
+}
+
+.movie-details-basic label {
+    padding-right: 1rem;
+}
+
+.movie-description {
+    padding: 0.5rem 0 0 1rem;
+    font-style: italic;
+}
+
+.movie-detail {
+    font-size: 20px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-top: 1px solid rgb(57, 57, 57);
+    display: flex;
+}
+
+.movie-detail label {
+    width: 100%;
+    display: flex;
+}
+
+.movie-detail label h1 {
+    display: inline-block;
+    width: 20%;
+    font-size: inherit;
+    color: inherit;
+}
+
+.movie-detail label p {
+    color: lightgray;
+    display: inline-block;
+}
+
+.movie-detail .movie-actor-name-ref {
+    color: rgb(138, 137, 252);
+}
+
+.movie-detail a {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+
+    :hover {
+        text-decoration: underline;
+    }
+}
+
+.movie-role-entries {
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-actor-role-entry {
+    display: block;
+}
+
+.movie-rating {
+    width: 100%;
+}
+
+.movie-rating-entries {
+    width: 100%;
+}
+
+.movie-rating-entry {
+    display: block;
+    border: 2px solid rgb(45, 45, 45);
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    margin: 0.2rem 0.4rem;
+
+    .rating-header {
+        display: flex;
+        justify-content: space-between;
+        font-weight: initial;
+        * {
+            margin:auto;
+        }
+    }
+
+    .rating-description {
+        width: 80%;
+        margin-left: 1rem;
+
+        
+    }
+}
+
+.rating-description p {
+    font-size: 12px;
+}

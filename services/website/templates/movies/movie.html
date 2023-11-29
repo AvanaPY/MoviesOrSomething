@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/movie.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="movie-div">
+        <div class="movie-general">
+            <div class="movie-header">
+                <div class="movie-title">
+                    <label for="title"> {{ movie.title }}</a></label>
+                </div>
+                <div class="movie-rating-container">
+                    <p>Average Rating: {{ movie.average_rating }}</p>
+                </div>
+            </div>
+            <div class="movie-details-basic">
+                <label for="release-year">{{ movie.release_year }}</label>
+                <label for="running-time">{{ movie.length_minutes }}m </label>
+                <label for="language"> {{ movie.language }} </label>
+            </div>
+            <div class="movie-description">
+                <p>
+                    {{ movie.tagline }}
+                </p>
+            </div>
+        </div>
+        <div class="movie-details-container">
+            <div class="movie-detail">
+                <label for="movie-director">
+                    <h1>Director</h1>
+                    <p>{{ movie.director }}</p>
+                </label>
+            </div>
+            <div class="movie-detail">
+                <label for="movie-distributor">
+                    <h1>Distributor</h1>
+                    <p>{{ movie.distributor.name }}</p>
+                </label>
+            </div>
+            <div class="movie-detail">
+                <label for="movie-budget">
+                    <h1>Budget</h1>
+                    <p>${{ movie.budget }} million</p>
+                </label>
+            </div>
+            <div class="movie-detail">
+                <label for="movie-box-office">
+                    <h1>Box Office</h1>
+                    <p>${{ movie.box_office }} million</p>
+                </label>
+            </div>
+            <div class="movie-detail">
+                <label for="movie-actors">
+                    <h1>Actors</h1>
+                    <div class="movie-role-entries">
+                        {% for role in movie.roles %}
+                        <div class="movie-actor-role-entry">
+                            <a href="/actors/{{ role.actor.id }}">
+                                <p class="movie-actor-name-ref">{{ role.actor.name }} {{ role.actor.last_name }} </p>
+                            </a>
+                            as {{ role.role.character_name }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </label>
+            </div>
+            <div class="movie-detail">
+                <label for="movie-ratings">
+                    <h1>Reviews</h1>
+                    <div class="movie-rating-entries">
+                        {% for rating in (movie.ratings|sort(attribute="rating", reverse=true))[:10] %}
+                        {% with rating=rating %}
+                            {% include "movies/rating.html" %}
+                        {% endwith %}
+                        {% endfor %}
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
