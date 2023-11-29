@@ -10,8 +10,11 @@ It's a very bad Movie rating service that probably serves no real purpose other 
 
 # Updates
 
-    29/11/2023 
+    28/11/2023 
     This project is going surprisingly well.
+
+    29/11/2023
+    I now have a Python frontend that barely works. Very cool.
 
 # The Meaning
 > "The Meaning of Life, the Universe, and Everything is making top-rated movies" - Sun Tzu *probably*
