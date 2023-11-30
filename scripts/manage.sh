@@ -81,7 +81,7 @@ deployWith()
 {
     case $2 in
         "backend" | "b")
-            service="movies-service-balancer"
+            service="movies-api-balancer"
             ports="4000:4000"
             ;;
         *)
@@ -105,6 +105,18 @@ deployWith()
             printf "${CYAN}Forwarding ${service} with kubectl...\n${ORANGE}"
             kubectl port-forward service/$service $ports
             printf "${NC}"
+            ;;
+    esac
+}
+
+database()
+{
+    case $1 in
+        "create")
+            kubectl exec --stdin --tty service/movies-api-balancer -- bash -c "mix ecto.create && mix ecto.migrate"
+            ;;
+        "delete")
+            kubectl exec --stdin --tty service/movies-api-balancer -- mix ecto.drop
             ;;
     esac
 }
@@ -135,4 +147,7 @@ case $1 in
         ;;
     "forward")
         deployWith $2 $3
+        ;;
+    "db" | "database")
+        database $2
 esac
