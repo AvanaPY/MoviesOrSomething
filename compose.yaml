@@ -12,7 +12,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - "./data/postgres_data:/var/lib/postgresql/data"
+      - "./data/pgdata2:/var/lib/postgresql/data"
   movies_service:
     container_name: movies_service
     depends_on:
@@ -28,3 +28,16 @@ services:
       - DEBUG=true
     ports:
       - 4000:4000
+  movies_service_web:
+    container_name: movies_service_web
+    depends_on:
+      - db_service
+      - movies_service
+    build:
+      context: ./services/website
+      dockerfile: Dockerfile
+    environment:
+      - API_URI=movies_service
+      - API_PORT=4000
+    ports:
+      - 8000:8000

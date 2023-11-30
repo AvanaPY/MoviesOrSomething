@@ -13,7 +13,10 @@ defmodule MoviesWeb.MovieRatingView do
   def render("movie_rating.json", %{movie_rating: movie_rating}) do
     %{
       id: movie_rating.id,
-      rating: movie_rating.rating
+      user_id: movie_rating.user_id,
+      rating: movie_rating.rating,
+      title: movie_rating.title,
+      description: movie_rating.description
     }
   end
 end

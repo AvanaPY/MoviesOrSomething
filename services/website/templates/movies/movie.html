@@ -70,11 +70,13 @@
             <div class="movie-detail">
                 <label for="movie-ratings">
                     <h1>Reviews</h1>
-                    <div class="movie-rating-entries">
+                    <div class="movie-details-container">
                         {% for rating in (movie.ratings|sort(attribute="rating", reverse=true))[:10] %}
-                        {% with rating=rating %}
+                        <div class="movie-detail review">
+                            {% with rating=rating %}
                             {% include "movies/rating.html" %}
-                        {% endwith %}
+                            {% endwith %}
+                        </div>
                         {% endfor %}
                     </div>
                 </label>
