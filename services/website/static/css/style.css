@@ -9,6 +9,10 @@ body {
     font-family:'Times New Roman', Times, serif;
 }
 
+a {
+    color: white;
+}
+
 .container {
     /* margin: 0rem 10rem; */
     width: 50%;

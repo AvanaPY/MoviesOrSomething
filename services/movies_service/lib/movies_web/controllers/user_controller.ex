@@ -51,7 +51,7 @@ defmodule MoviesWeb.UserController do
       case user.password do
         ^password ->
           conn
-          |> send_resp(200, "OK")
+          |> render("show.json", user: user)
 
         _ ->
           conn

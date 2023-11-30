@@ -5,9 +5,14 @@
     font-family: "Times New Roman", Times, serif;
 }
 
-.navbar h1 {
+.navbar-ul {
     display: flex;
-    height: 100%;
+    justify-content: space-between;
+    padding: 0 4rem;
+    width: 100%;
+}
+
+.navbar h1 {
     padding: 1rem 1em;
     font-size: 24px;
     line-height: 1.4rem;
@@ -18,14 +23,21 @@
     text-align: center;
 }
 
-.navbar-btn {
+.navbar-item {
     display: block;
-    color: white;
     line-height: 1.4rem;
     padding: 1rem 0.75rem;;
     font-size: 16px;
+}
+
+.navbar-item a {
     text-decoration: none;
     :hover {
-        color: cyan;
+        color: cyan
     }
+}
+
+.navbar-signin {
+    border: 1px solid gray;
+    border-radius: 8px;
 }

@@ -12,9 +12,8 @@ defmodule MoviesWeb.UserView do
 
   def render("user.json", %{user: user}) do
     %{
-      id: user.id,
       username: user.username,
-      password: user.password
+      token: user.username
     }
   end
 end

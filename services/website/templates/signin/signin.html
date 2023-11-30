@@ -5,5 +5,25 @@
 {% endblock %}
 
 {% block content %}
-Nothing to show here
+<div class="content">
+    <center><h1>Sign In</h1></center>
+    {% if session['invalid-credentials'] %}
+        <div class="invalid-credentials-container">
+            <p>
+                Invalid Credentials
+            </p>
+        </div>
+    {% endif %}
+    <div class="signin-form">
+        <form class="signin-details" action="/signin/submit" method="get">
+            <div class="signin-details">
+                <input type="text" name="user" placeholder="Username" required="required" pattern="[A-Za-z0-9]{1,20}">
+            </div>
+            <div class="signin-details">
+                <input type="password" name="password" id="pass" placeholder="Password" required="required" pattern="[A-Za-z0-9]{1,20}">
+            </div>
+            <button type="submit">Sign In</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

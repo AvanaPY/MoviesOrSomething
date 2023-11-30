@@ -1,20 +1,32 @@
 <div class="navbar">
-    <h1>BTH Movies</h1>
     <ul class="navbar-ul">
+        <div class="navbar-navs">
+            <li>
+                <h1>BTH Movies</h1>
+            </li>
+            <li class="navbar-item">
+                <a id="navbar-home" href="/">Home</a>
+            </li>
+            <li class="navbar-item">
+                <a id="navbar-movies" href="/movies">Movies</a>
+            </li>
+            <li class="navbar-item">
+                <a id="navbar-actors" href="/actors">Actors</a>
+            </li>
+            <li class="navbar-item">
+                <a id="navbar-ratings" href="/ratings">Ratings</a>
+            </li>
+        </div>
         <li>
-            <a class="navbar-btn" id="navbar-home" href="/">Home</a>
-        </li>
-        <li>
-            <a class="navbar-btn" id="navbar-sign-in" href="/signin">Sign in</a>
-        </li>
-        <li>
-            <a class="navbar-btn" id="navbar-movies" href="/movies">Movies</a>
-        </li>
-        <li>
-            <a class="navbar-btn" id="navbar-actors" href="/actors">Actors</a>
-        </li>
-        <li>
-            <a class="navbar-btn" id="navbar-ratings" href="/ratings">Ratings</a>
+            {% if session['token'] %}
+            <div class="navbar-signin navbar-item">
+                <p><a href="/signin/logout">Logout as {{ session['username'] }}</a> </p>
+            </div>
+            {% else %}
+            <li class="navbar-item">
+                <a id="navbar-signin" href="/signin">Sign in</a>
+            </li class="navbar-item">
+            {% endif %}
         </li>
     </ul>
 </div>
