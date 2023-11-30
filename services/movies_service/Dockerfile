@@ -1,4 +1,4 @@
-FROM elixir:1.13.4 AS base
+FROM elixir:1.13.4-slim AS base
 RUN mix local.hex --force && mix local.rebar --force
 
 FROM base as build

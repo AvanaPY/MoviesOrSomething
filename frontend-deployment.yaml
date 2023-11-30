@@ -1,39 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: movies-api
+  name: movies-frontend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: movies-api
+      app: movies-frontend
   template:
     metadata:
       labels:
-        app: movies-api
+        app: movies-frontend
     spec:
       containers:
-      - name: movies-api
-        image: emilkarlstrombth/movies_service_backend:latest
+      - name: movies-frontend
+        image: emilkarlstrombth/movies_service_frontend:latest
         resources:
           limits:
             memory: "256Mi"
             cpu: "500m"
         ports:
-        - containerPort: 4000
+        - containerPort: 8000
         envFrom:
           - configMapRef:
-              name: movies-api-config
+              name: movies-frontend-config
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: movies-api-balancer
+  name: movies-frontend-balancer
 spec:
   type: LoadBalancer
   selector:
-    app: movies-api
+    app: movies-frontend
   ports:
-  - port: 4000
-    targetPort: 4000
+  - port: 8000
+    targetPort: 8000
     protocol: TCP
