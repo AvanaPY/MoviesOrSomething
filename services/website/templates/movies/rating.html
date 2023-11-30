@@ -1,13 +1,12 @@
-
 <div class="rating-header">
-    <h3>Rating Title aaaaaaa</h3>
+    <h3>  {{ rating.title }} </h3>
     <p> {{ rating.rating }} </p>
+</div>
+<div class="reviewer-details">
+    <p> {{ rating.user_id }} </p>
 </div>
 <div class="rating-description">
     <p>
-        This movie was really good!
-        Here is a new line!
-        Not yet! 
-        BUT NOW!!!
+        {{ rating.description }}
     </p>
 </div>

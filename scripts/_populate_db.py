@@ -78,6 +78,34 @@ class Rating:
             }
         }
 
+# Start by setting up two default users with a default password
+users = [
+    {
+        "user" : {
+            "username": "username",
+            "password": "password"
+        }  
+    },
+    {
+        "user" : {
+            "username": "username1",
+            "password": "password2"
+        }  
+    },
+]
+
+for json in users:
+    resp = requests.post(f'{URI}/user/create', json=json)
+    if resp.status_code == 201:
+        print(f'User created succesfully')
+    elif resp.status_code == 409:
+        print(f'User already exists, moving on')
+    else:
+        print(f'Failed to create user: {resp.content.decode()} ({resp.status_code})')
+        exit(0)
+
+# Then some actors and movies
+
 leonardo = Actor(name="Leonardo",
                  last_name="DiCaprio",
                  age=47,
@@ -243,11 +271,12 @@ for movie in movies:
         if resp.status_code == 200 and movie.m_id == None:
             json = resp.json()
             movie.m_id = json.get('data').get('movie')
-            
-    for _ in range(random.randint(2, 7)):
+    
+    users = random.sample(range(1, 3), k=random.randint(1, 2))
+    for i in users:
         rating = Rating(
             movie_id=movie.m_id,
-            user_id=-1,
+            user_id=i,
             rating=random.choice(rating_ratings),
             title=random.choice(rating_titles),
             description=random.choice(rating_descriptions)
@@ -255,3 +284,5 @@ for movie in movies:
         resp = requests.post(f'{URI}/movies/rating/rate', json=rating.json())
         if resp.status_code == 201:
             print(f'Created review for {movie.title}: {rating.title}')
+        else:
+            print(f'Failed to create movie review: {resp.content.decode()} ({rating.json()})')

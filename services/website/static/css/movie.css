@@ -108,8 +108,14 @@
     }
 }
 
+
+.reviewer-details {
+    font-size: 12px;
+}
+
 .rating-description {
     width: 80%;
+    padding-top: 1rem;
 }
 
 .rating-description p {
