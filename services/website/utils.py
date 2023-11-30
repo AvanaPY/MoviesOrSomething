@@ -4,7 +4,9 @@ from jinja2 import TemplateNotFound
 import requests
 import os
 
-API_URI = os.environ.get('API_URI', 'http://127.0.0.1:4000/api')
+API_URL = os.environ.get('API_URI', '127.0.0.1')
+API_PORT = os.environ.get('API_PORT', '4000')
+API_URI = f'http://{API_URL}:{API_PORT}/api'
 
 def get_from_api(api_path : str, params : str = '') -> Tuple[int, Dict[str, Union[str, int, float]]]:
     if not api_path.startswith('/'): 
