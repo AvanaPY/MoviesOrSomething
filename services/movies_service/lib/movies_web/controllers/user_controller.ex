@@ -45,4 +45,18 @@ defmodule MoviesWeb.UserController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def authenticate(conn, %{"username" => username, "password" => password}) do
+    with {:ok, user} <- Users.get_by_username(username) do
+      case user.password do
+        ^password ->
+          conn
+          |> send_resp(200, "OK")
+
+        _ ->
+          conn
+          |> send_resp(404, "Unauthorized")
+      end
+    end
+  end
 end

@@ -45,8 +45,10 @@ defmodule MoviesWeb.Router do
     post "/movies/rating/update", MovieRatingController, :update
     post "/movies/rating/delete/:id", MovieRatingController, :delete
 
+    post "/user/authenticate", UserController, :authenticate
     post "/user/create", UserController, :create
     post "/user/update", UserController, :update
     post "/user/delete", UserController, :delete
+
   end
 end

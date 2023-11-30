@@ -37,6 +37,12 @@ defmodule Movies.Users do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def get_by_username(username) do
+    case Repo.get_by(User, [username: username]) do
+      nil -> {:error, :not_found}
+      user -> {:ok, user}
+    end
+  end
   @doc """
   Creates a user.
 
