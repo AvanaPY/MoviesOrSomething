@@ -8,6 +8,8 @@ API_URL = os.environ.get('API_URI', '127.0.0.1')
 API_PORT = os.environ.get('API_PORT', '4000')
 API_URI = f'http://{API_URL}:{API_PORT}/api'
 
+print(f'API URI: {API_URI}')
+
 def get_from_api(api_path : str, 
                  params : str = '', 
                  json : dict = None,

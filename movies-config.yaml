@@ -5,8 +5,6 @@ metadata:
 data:
   DB_HOST: "NOTSET"
   DB_PORT: "5432"
-  DB_USER: user
-  DB_PASS: pass
 ---
 apiVersion: v1
 kind: ConfigMap

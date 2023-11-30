@@ -13,7 +13,7 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Delete
   hostPath:
-    path: "/mnt/pgdata1"
+    path: "/mnt/pgdata2"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

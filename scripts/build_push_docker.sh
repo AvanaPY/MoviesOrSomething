@@ -15,5 +15,16 @@ docker build -t "emilkarlstrombth/movies_service_backend:${tag}" -t emilkarlstro
 docker build -t "emilkarlstrombth/movies_service_frontend:${tag}" -t "emilkarlstrombth/movies_service_frontend:latest" services/website/
 
 echo "Pushing to docker hub..."
-docker image push --all-tags "emilkarlstrombth/movies_service_backend"
-docker image push --all-tags "emilkarlstrombth/movies_service_frontend"
+docker image push "emilkarlstrombth/movies_service_backend:${tag}"
+docker image push "emilkarlstrombth/movies_service_frontend:${tag}"
+
+if [ $# -eq 2 ] 
+then
+    case $2 in
+        "latest")
+            print "Pushing latest..."
+            docker image push "emilkarlstrombth/movies_service_backend:latest"
+            docker image push "emilkarlstrombth/movies_service_frontend:latest"
+            ;;
+    esac
+fi
