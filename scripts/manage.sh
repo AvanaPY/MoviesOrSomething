@@ -69,9 +69,7 @@ deployKubernetesResources()
     printf "${BLUE}movies-api deployed. Binding API ip ($API_IP) to movies-frontend ConfigMap${NC}\n"
     kubectl get configmap/movies-frontend-config -o yaml \
         | sed -r "s/NOTSET/$API_IP/" | kubectl apply -f - 
-
-    kubectl get configmap/movies-frontend-config -o yaml
-
+        
     printf "${BLUE}Deploying movies-frontend...${NC}\n"
     kubectl apply -f frontend-deployment.yaml
 }

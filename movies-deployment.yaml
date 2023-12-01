@@ -24,22 +24,6 @@ spec:
         envFrom:
           - configMapRef:
               name: movies-api-config
-        env:
-          - name: POSTGRES_USER
-            valueFrom:
-              secretKeyRef:
-                name: database-secret
-                key: POSTGRES_USER
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: database-secret
-                key: POSTGRES_PASSWORD
-          - name: POSTGRES_DB
-            valueFrom:
-              secretKeyRef:
-                name: database-secret
-                key: POSTGRES_DB
 ---
 apiVersion: v1
 kind: Service

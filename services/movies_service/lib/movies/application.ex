@@ -22,8 +22,10 @@ defmodule Movies.Application do
     ]
     with conf = Application.get_env(:movies, Movies.Repo),
          hostname <- conf[:hostname],
-         port <- conf[:port] do
-        IO.puts "Listening to DB on #{hostname}:#{port}"
+         port <- conf[:port],
+         username <- conf[:username],
+         password <- conf[:password] do
+        IO.puts "Listening to DB on #{hostname}:#{port} (#{username}:#{password})"
     end
 
     # See https://hexdocs.pm/elixir/Supervisor.html

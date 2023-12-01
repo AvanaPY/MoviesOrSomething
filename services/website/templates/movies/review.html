@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/movie.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/review.css') }}">
+{% endblock %}
+
+
+
+{% block content %}
+<script type="text/javascript">
+    window.addEventListener('keydown',function(e) {
+        if (e.keyIdentifier=='U+000A' || e.keyIdentifier=='Enter' || e.keyCode==13) {
+            if (e.target.nodeName=='INPUT' && e.target.type=='text') {
+                e.preventDefault();
+
+                return false;
+            }
+        }
+    }, true);
+</script>
+<div class="content">
+    <div class="movie-div">
+        <div class="movie-general">
+            <div class="movie-header">
+                <div class="movie-title">
+                    <label for="title"> {{ movie.title }}</a></label>
+                </div>
+            </div>
+            <div class="movie-details-basic">
+                <label for="release-year">{{ movie.release_year }}</label>
+                <label for="running-time">{{ movie.length_minutes }}m </label>
+                <label for="language"> {{ movie.language }} </label>
+            </div>
+            <div class="movie-description">
+                <p>
+                    {{ movie.tagline }}
+                </p>
+            </div>
+        </div>
+        <div class="review-box">
+            <form class="title" action="/review/submit" method="post" onkeypress="return event.keyCode != 13;">
+                <div class="review-details">
+                    <input type="text" value="10" name="rating" id="rating" required="required" title="Numbers between 1 and 10" pattern="[1-9]|10">
+                    <p>/ 10</p>
+                </div>
+                <div class="review-details">
+                    <input type="text" name="title" id="title" placeholder="Title" required="required">
+                </div>
+                <div class=""review-details>
+                    <textarea name="description" id="description" required="required" cols="30" rows="10"></textarea>
+                </div>
+                <div class="review-buttons">
+                    <button type="submit" name="action" value="signin">Submit Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

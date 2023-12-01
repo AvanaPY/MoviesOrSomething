@@ -2,7 +2,7 @@ usage() {
     echo "Usage: [tag]" 
 }
 
-if [ ! $# -eq 1 ]
+if [ $# -eq 0 ]
 then 
     usage
     exit 0
