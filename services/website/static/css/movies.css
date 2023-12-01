@@ -1,12 +1,6 @@
 #navbar-movies {
     text-decoration: underline;
 }
-.content {
-    margin-top: 0.5rem;
-    border: 2px solid rgba(41, 41, 41, 0.8);
-    border-radius: 5px;
-}
-
 .movie-div {
     padding: 1rem;
     margin: 1rem;

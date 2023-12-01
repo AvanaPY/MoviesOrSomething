@@ -1,3 +1,13 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: database-secret
+type: Opaque
+data:
+  POSTGRES_USER: user
+  POSTGRES_PASSWORD: pass
+  POSTGRES_DB: database
+immutable: true
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -15,13 +25,30 @@ spec:
     spec:
       containers:
         - name: postgres
-          image:  postgres
+          image:  postgres:latest
           imagePullPolicy: "IfNotPresent"
           ports:
             - containerPort: 5432
-          envFrom:
-            - configMapRef:
-                name: postgres-config
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "1000m"
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: database-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-secret
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: database-secret
+                  key: POSTGRES_DB
           volumeMounts:
             - mountPath: var/lib/postgresql/data 
               name: postgredb
@@ -29,4 +56,3 @@ spec:
         - name: postgredb
           persistentVolumeClaim:
             claimName: postgres-pv-claim 
-          

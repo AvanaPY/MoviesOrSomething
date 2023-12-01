@@ -45,7 +45,6 @@ deployKubernetesResources()
 {
     # Set up postgres first and foremost
     printf "${BLUE}Deploying postgres...${NC}\n"
-    kubectl apply -f postgres-config.yaml    
     kubectl apply -f postgres-pvc-pv.yaml   
     kubectl apply -f postgres-service.yaml   
     kubectl apply -f postgres-deployment.yaml
@@ -70,7 +69,7 @@ deployKubernetesResources()
     printf "${BLUE}movies-api deployed. Binding API ip ($API_IP) to movies-frontend ConfigMap${NC}\n"
     kubectl get configmap/movies-frontend-config -o yaml \
         | sed -r "s/NOTSET/$API_IP/" | kubectl apply -f - 
-
+        
     printf "${BLUE}Deploying movies-frontend...${NC}\n"
     kubectl apply -f frontend-deployment.yaml
 }
