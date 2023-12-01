@@ -12,8 +12,15 @@
                 <div class="movie-title">
                     <label for="title"> {{ movie.title }}</a></label>
                 </div>
-                <div class="movie-rating-container">
-                    <p>Average Rating: {{ movie.average_rating }}</p>
+                <div class="text-right">
+                    <div class="average-movie-rating-container">
+                        <p>
+                            Average Rating: 
+                        </p>
+                        <p id="average-movie-rating">
+                            {{ movie.average_rating }}
+                        </p>
+                    </div>
                     {% if session['token'] %}
                         <p><a href="/review/{{ movie.id }}">Leave a review</a></p>
                     {% endif %}
@@ -72,8 +79,10 @@
             </div>
             <div class="movie-detail">
                 <label for="movie-ratings">
-                    <h1>Reviews</h1>
-                    <div class="movie-details-container">
+                    <div>
+                        <h1>Reviews</h1>
+                    </div>
+                    <div class="movie-rating-container expand-width-small">
                         {% for rating in (movie.ratings|sort(attribute="rating", reverse=true))[:10] %}
                         <div class="movie-detail review">
                             {% with rating=rating %}

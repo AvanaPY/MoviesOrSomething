@@ -45,7 +45,7 @@ deployKubernetesResources()
 {
     # Set up postgres first and foremost
     printf "${BLUE}Deploying postgres...${NC}\n"
-    kubectl apply -f postgres-pvc-pv.yaml   
+    # kubectl apply -f postgres-pvc-pv.yaml   
     kubectl apply -f postgres-service.yaml   
     kubectl apply -f postgres-deployment.yaml
     
@@ -85,7 +85,7 @@ deployWith()
             ;;
         *)
             service="movies-frontend-balancer"
-            ports="8000:8000"
+            ports="80:80"
             ;;
             
     esac

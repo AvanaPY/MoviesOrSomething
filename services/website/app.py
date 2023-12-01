@@ -12,7 +12,8 @@ def create_app() -> Flask:
     }
     
     app.config.update(config)
-    app.config['SECRET_KEY'] = os.urandom(12).hex()
+    app.config['SECRET_KEY'] = 'b642f77824eab51bca372b3a'
+    app.config['SESSION_COOKIE_NAME'] = 'my_cookie_session'
     
     blueprints.register_blueprints(app)
     return app

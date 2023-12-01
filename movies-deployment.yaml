@@ -15,10 +15,11 @@ spec:
       containers:
       - name: movies-api
         image: emilkarlstrombth/movies_service_backend:latest
+        imagePullPolicy: Always
         resources:
           limits:
-            memory: "256Mi"
-            cpu: "500m"
+            memory: "128Mi"
+            cpu: "100m"
         ports:
         - containerPort: 4000
         envFrom:

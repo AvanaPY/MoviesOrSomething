@@ -33,7 +33,16 @@
     display: flex;
     flex-direction: column;
     justify-content: end;
-    text-align: end;
+}
+
+.average-movie-rating-container p {
+    display: inline-block;
+}
+
+#average-movie-rating {
+    display: inline-block;
+    min-width: 2rem;
+    font-weight: bold;
 }
 
 .movie-details-basic label {
@@ -116,9 +125,4 @@
 
 .rating-description p {
     font-size: 14px;
-}
-
-.review {
-    float: right;
-    width: 90%;
 }

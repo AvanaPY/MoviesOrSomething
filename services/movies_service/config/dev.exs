@@ -4,7 +4,7 @@ import Config
 config :movies, Movies.Repo,
   username: System.get_env("POSTGRES_USER", "user"),
   password: System.get_env("POSTGRES_PASSWORD", "pass"),
-  database: System.get_env("POSTGRES_DB", "movies_dev"),
+  database: System.get_env("POSTGRES_DB", "database"),
   hostname: System.get_env("DB_HOST", "localhost"),
   port: System.get_env("DB_PORT", "5432"),
   stacktrace: true,

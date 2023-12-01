@@ -17,10 +17,10 @@ spec:
         image: emilkarlstrombth/movies_service_frontend:latest
         resources:
           limits:
-            memory: "256Mi"
-            cpu: "500m"
+            memory: "128Mi"
+            cpu: "100m"
         ports:
-        - containerPort: 8000
+        - containerPort: 80
         envFrom:
           - configMapRef:
               name: movies-frontend-config
@@ -34,6 +34,6 @@ spec:
   selector:
     app: movies-frontend
   ports:
-  - port: 8000
-    targetPort: 8000
+  - port: 80
+    targetPort: 80
     protocol: TCP

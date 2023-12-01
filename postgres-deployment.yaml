@@ -2,10 +2,10 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: database-secret
-type: Opaque
-data:
-  POSTGRES_USER: user
-  POSTGRES_PASSWORD: pass
+type: kubernetes.io/basic-auth
+stringData:
+  username: user
+  password: pass
   POSTGRES_DB: database
 immutable: true
 ---
@@ -31,19 +31,19 @@ spec:
             - containerPort: 5432
           resources:
             limits:
-              memory: "512Mi"
-              cpu: "1000m"
+              memory: "256Mi"
+              cpu: "100m"
           env:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: database-secret
-                  key: POSTGRES_USER
+                  key: username
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: database-secret
-                  key: POSTGRES_PASSWORD
+                  key: password
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
