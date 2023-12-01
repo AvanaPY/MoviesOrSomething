@@ -9,4 +9,3 @@ def register_blueprints(app):
     app.register_blueprint(movies)
     app.register_blueprint(actors)
     app.register_blueprint(signin)
-    app.register_blueprint(ratings)
