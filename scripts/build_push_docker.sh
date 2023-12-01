@@ -1,5 +1,5 @@
 usage() {
-    echo "Usage: [tag]" 
+    echo "Usage: [tag:int] {latest}" 
 }
 
 if [ $# -eq 0 ]
@@ -9,6 +9,12 @@ then
 fi
 
 tag=$1
+
+if [[ -n ${tag//[0-9]/} ]]; then
+    echo "Tag must not contain letters, only an integer"
+    usage
+    exit 0
+fi
 
 echo "Building docker container..."
 docker build -t "emilkarlstrombth/movies_service_backend:${tag}" -t emilkarlstrombth/movies_service_backend:latest services/movies_service
