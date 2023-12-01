@@ -19,6 +19,15 @@ It's a very bad Movie rating service that probably serves no real purpose other 
     29/11/2023 23:43
     Pretty cool stuff here ngl
 
+    30/11/2023
+    It can now be deployed on Minikube. Unsure if it works on a full
+    Kubernetes deployment but one can always hope. 
+    
+    It Works on My Machine ~ Me 2023
+
+    01/12/2023
+    Report finished. Assignment done. Happy vibes.
+
 # The Meaning
 > "The Meaning of Life, the Universe, and Everything is making top-rated movies" - Sun Tzu *probably*
 

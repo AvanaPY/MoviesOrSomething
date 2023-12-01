@@ -48,7 +48,6 @@ deployKubernetesResources()
     kubectl apply -f postgres-pvc-pv.yaml   
     kubectl apply -f postgres-service.yaml   
     kubectl apply -f postgres-deployment.yaml
-
     
     # Read the database ip
     POSTGRES_IP=$(kubectl get service/postgres-service -o jsonpath='{.spec.clusterIP}')
