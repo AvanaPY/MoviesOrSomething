@@ -1,11 +1,4 @@
-.review-box {
-    margin: 1rem 0;
-    padding: 1rem;
-    width: 100%;
-    border: 2px solid black;
-}
-
-input[type=text], input[type=password], textarea {   
+input[type=text], textarea {   
     margin: 8px 0;  
     padding: 8px 20px;   
     box-sizing: border-box;   
@@ -24,6 +17,11 @@ button[type=submit] {
     border: 2px solid white;
     border-radius: 4px;
     color: white;
+}
+
+.review-box {
+    margin: 1rem 0;
+    padding: 1rem;
 }
 
 .invalid-credentials-container {
@@ -51,7 +49,7 @@ button[type=submit] {
 }
 
 #rating {
-    width: 15%;
+    width: 3em;
     text-align: center;
 }
 #title {

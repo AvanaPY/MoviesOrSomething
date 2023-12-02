@@ -45,7 +45,7 @@ deployKubernetesResources()
 {
     # Set up postgres first and foremost
     printf "${BLUE}Deploying postgres...${NC}\n"
-    # kubectl apply -f postgres-pvc-pv.yaml   
+    kubectl apply -f postgres-pvc-pv.yaml   
     kubectl apply -f postgres-service.yaml   
     kubectl apply -f postgres-deployment.yaml
     
