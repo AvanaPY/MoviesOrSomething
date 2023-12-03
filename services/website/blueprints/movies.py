@@ -8,14 +8,13 @@ movies = Blueprint('movies', __name__, template_folder='templates')
 @movies.route('/movies', defaults={'page': 'movies'})
 def index(page):
     status, content = get_from_api('/movies')
-    if status != 200:
-        abort(500)
-    
-    movies = content.get('data')
-    movies = sorted(movies, key=lambda m : m.get("title"))
-    
-    return render_template_m(f'movies/{page}.html', movies=movies)
-
+    if status == 200:
+        movies = content.get('data')
+        movies = sorted(movies, key=lambda m : m.get("title"))
+        return render_template_m(f'movies/{page}.html', movies=movies)
+    else:
+        return render_template_m(f'movies/{page}.html', movies=[])
+        
 @movies.route('/movies/<id>')
 def movies_id(id):
     status, content = get_from_api(f'/movies/get/{id}', params="detailed=true")

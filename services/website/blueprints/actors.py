@@ -8,12 +8,13 @@ actors = Blueprint('actors', __name__, template_folder='templates')
 @actors.route('/actors', defaults={'page': 'actors'})
 def index(page):
     status, content = get_from_api('/actors')
-    if status != 200:
-        abort(500)
-    actors = content.get('data')
-    actors = sorted(actors, key=lambda a : f'{a.get("name")} {a.get("last_name")}')
-    return render_template_m(f'actors/{page}.html', actors=actors)
-
+    if status == 200:
+        actors = content.get('data')
+        actors = sorted(actors, key=lambda a : f'{a.get("name")} {a.get("last_name")}')
+        return render_template_m(f'actors/{page}.html', actors=actors)
+    else:
+        return render_template_m(f'actors/{page}.html', actors=[])
+        
 @actors.route('/actors/<id>')
 def actors_id(id):
     status, content = get_from_api(f'/actors/{id}', params="detailed=true")
