@@ -11,6 +11,10 @@ def index(page):
 
 @signin.route('/signin/submit', methods=['POST'])
 def signin_submit() -> str:
+    session['invalid-credentials'] = False
+    session['empty-credentials'] = False
+    session['username-taken'] = False
+    
     username = request.form.get('user')
     password = request.form.get('password')
     
@@ -44,6 +48,7 @@ def _register(username : str, password : str) -> str:
         abort(500)
 
 def _signin(username : str, password: str) -> str:
+    session['invalid-credentials'] = False
 
     status, result = get_from_api('/user/authenticate', f'username={username}&password={password}')
     if status == 404:
@@ -55,8 +60,11 @@ def _signin(username : str, password: str) -> str:
     session['token'] = result.get('token')
     return redirect('/')
 
-@signin.route('/signin/logout')
+@signin.route('/signin/signout')
 def signin_logout() -> str:
     session['username'] = None
     session['token'] = None
+    session['invalid-credentials'] = False
+    session['empty-credentials'] = False
+    session['username-taken'] = False
     return redirect('/')

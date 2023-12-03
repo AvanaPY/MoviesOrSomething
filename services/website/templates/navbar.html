@@ -22,7 +22,7 @@
             <div class="navbar-items">
                 <li class="navbar-item signin-state">
                     {% if session['token'] %}
-                        <h2><a href="/signin/logout">Logout as {{ session['username'] }}</a></h2>
+                        <h2><a href="/signin/signout">Sign out</a></h2>
                     {% else %}
                         <h2><a id="navbar-signin" href="/signin">Sign in</a></h2>
                     {% endif %}
