@@ -37,6 +37,7 @@ def _register(username : str, password : str) -> str:
     status, result = get_from_api('/user/create', json=json, method="POST")
     if status == 200 or status == 201:
         result = result.get('data')
+        session['user_id'] = result.get('id')
         session['username'] = result.get('username')
         session['token'] = result.get('token')
         return redirect('/')
@@ -56,6 +57,7 @@ def _signin(username : str, password: str) -> str:
         return redirect(f'/signin')
     
     result = result.get('data')
+    session['user_id'] = result.get('id')
     session['username'] = result.get('username')
     session['token'] = result.get('token')
     return redirect('/')

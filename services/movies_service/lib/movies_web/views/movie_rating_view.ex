@@ -18,5 +18,16 @@ defmodule MoviesWeb.MovieRatingView do
       title: movie_rating.title,
       description: movie_rating.description
     }
+    |> insert_loaded_user(movie_rating)
+  end
+
+  defp insert_loaded_user(map, movie_rating) do
+    case Ecto.assoc_loaded?(movie_rating.user) do
+      true -> Map.put(map, :user, %{
+        id: movie_rating.user.id,
+        username: movie_rating.user.username
+      })
+      false -> Map.put(map, :user, "N/A")
+    end
   end
 end

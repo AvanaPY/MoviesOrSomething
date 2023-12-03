@@ -36,7 +36,7 @@ defmodule Movies.Moviez do
 
   """
   def get_movie!(id, %{detailed: true}),
-    do: get_movie!(id) |> Repo.preload([:distributor, :ratings, movies_actors: [:actor]])
+    do: get_movie!(id) |> Repo.preload([:distributor, ratings: [:user], movies_actors: [:actor]])
 
   def get_movie!(id), do: Repo.get!(Movie, id)
 

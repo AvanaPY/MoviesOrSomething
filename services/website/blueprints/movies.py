@@ -14,7 +14,7 @@ def index(page):
         return render_template_m(f'movies/{page}.html', movies=movies)
     else:
         return render_template_m(f'movies/{page}.html', movies=[])
-        
+
 @movies.route('/movies/<id>')
 def movies_id(id):
     status, content = get_from_api(f'/movies/get/{id}', params="detailed=true")
@@ -45,11 +45,11 @@ def movies_review(movie_id):
 @movies.route('/review/submit', methods=['POST'])
 def movies_review_submit():
     movie_id = session.get('movie_id')
+    user_id = session.get('user_id')
     
     rating  = request.form.get('rating')
     title   = request.form.get('title')
     descr   = request.form.get('description')
-    user_id = 1
     
     json = {
         "movie_rating" : {

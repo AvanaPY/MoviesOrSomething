@@ -6,7 +6,12 @@ import gc
 
 random.seed(42)
 
-URI = 'http://localhost:4000/api'
+api_ip = input('Input the API address (or nothing for localhost)> ')
+
+if api_ip:
+    URI = f'http://{api_ip}:4000/api'
+else:
+    URI = f'http://localhost:4000/api'
 
 try:    
     resp = requests.get(URI)
@@ -169,13 +174,28 @@ mark = Actor(name="Mark",
         country="USA",
         year_started=1970)
 
+chieko = Actor(name='Chieko',
+               last_name='Baisho',
+               age=82,
+               country="JP",
+               year_started=1961)
+
+qu = Actor(name='Qu',
+           last_name='Chuxiao',
+           age=28,
+           country="CN",
+           year_started=2016)
+
 actors = [
     obj for obj in gc.get_objects() if isinstance(obj, Actor)
 ]
 
 for actor in actors:
     resp = requests.post(f'{URI}/actors/create', json=actor.json())
-    print(f'Created movie {actor.name}: {resp.status_code}')
+    if resp.status_code == 201:
+        print(f'Created actor {actor.name}: {resp.status_code}')
+    else:
+        print(f'Failed to add actor: {actor.name}: {resp.content.decode()}')
     
 actors_index = requests.get(f'{URI}/actors').json().get('data')
 
@@ -239,7 +259,30 @@ movies = [
         budget=350,
         box_office=2320,
         release_year=2022,
-        actors=[(sam, "Jake Sully"), (zoe, "Neytiri")]) 
+        actors=[(sam, "Jake Sully"), (zoe, "Neytiri")]),
+    Movie(
+        title="Howl's Moving Castle",
+        tagline="Yvilian's favorite film!!",
+        length_minutes=119,
+        director="Hayao Miyazaki",
+        language="JP",
+        budget=24,
+        box_office=236,
+        release_year=2004,
+        actors=[(chieko, "Sophie Hatter")]
+    ),
+    Movie(
+        title="The Wandering Earth",
+        tagline="Humans gotta move le Earth away with big rockets go brr",
+        length_minutes=125,
+        director="Frant Gwo",
+        language="CN",
+        budget=50,
+        box_office=700,
+        release_year=2019,
+        actors=[(qu, "Liu Qi")]
+        
+    )
 ]
 
 rating_titles = [
@@ -256,8 +299,10 @@ rating_ratings = list(range(5, 11))
 
 for movie in movies:
     resp = requests.post(f'{URI}/movies/create', json=movie.json())
-    print(f'Created movie {movie.title}: {resp.status_code}')
-    
+    if resp.status_code == 201:
+        print(f'Created movie {movie.title}: {resp.status_code}')
+    else:
+        print(f'Failed to add movie: {movie.title}: {resp.content.decode()}')
     for actor, character in movie.actors:
         json = {
             "movie_name": movie.title,
@@ -271,18 +316,3 @@ for movie in movies:
         if resp.status_code == 200 and movie.m_id == None:
             json = resp.json()
             movie.m_id = json.get('data').get('movie')
-    
-    users = random.sample(range(1, 3), k=random.randint(1, 2))
-    for i in users:
-        rating = Rating(
-            movie_id=movie.m_id,
-            user_id=i,
-            rating=random.choice(rating_ratings),
-            title=random.choice(rating_titles),
-            description=random.choice(rating_descriptions)
-        )
-        resp = requests.post(f'{URI}/movies/rating/rate', json=rating.json())
-        if resp.status_code == 201:
-            print(f'Created review for {movie.title}: {rating.title}')
-        else:
-            print(f'Failed to create movie review: {resp.content.decode()} ({rating.json()})')
